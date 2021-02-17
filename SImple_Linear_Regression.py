@@ -14,6 +14,7 @@ import matplotlib as mpl
 import seaborn as sns
 import math as mt
 import statsmodels.formula.api as smf
+from sklearn.linear_model import LinearRegression
 
 ############# Newspaper problem #####
 
@@ -57,4 +58,15 @@ model=smf.ols("AT~Waist",data=Wc_AT).fit()
 model.summary()
 model.params
 
+##### another method using scikit-learn ####
+
+
+x=np.array(Wc_AT.Waist).reshape(-1,1) # x variable should be a 2D array so coverting that
+sk_model = LinearRegression().fit(x, Wc_AT.AT) # model building
+sk_model.score(x, Wc_AT.AT)  # r square value
+sk_model.intercept_ # beta not
+sk_model.coef_ # beta one( slope)
+
+x_new=[[80],[121]] # input should be a 2D array
+y_pred=sk_model.predict(x_new)
 
